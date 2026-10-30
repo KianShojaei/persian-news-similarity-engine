@@ -180,7 +180,7 @@ sequenceDiagram
 
 $$\text{TF-IDF}(t, d) = \text{TF}(t, d) \times \left( \ln\frac{1 + N}{1 + \text{DF}(t)} + 1 \right)$$
 
-سپس زاویه کسینوسی بین دو بردار وزن‌دار $\mathbf{x}_{\mathrm{tfidf}}$ و $\mathbf{y}_{\mathrm{tfidf}}$ محاسبه می‌گردد:
+سپس زاویه کسینوسی بین دو بردار وزن‌دار محاسبه می‌گردد:
 
 $$S_{\text{lexical}}(\mathbf{x}, \mathbf{y}) = \cos(\theta) = \frac{\mathbf{x}_{\text{tfidf}} \cdot \mathbf{y}_{\text{tfidf}}}{\|\mathbf{x}_{\text{tfidf}}\|_2 \, \|\mathbf{y}_{\text{tfidf}}\|_2} \in [0, 1]$$
 
