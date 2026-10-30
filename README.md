@@ -17,14 +17,9 @@
 
 در ویدیوی زیر می‌توانید نحوه کارکرد بلادرنگ سامانه، استخراج هم‌زمان اخبار از ایتا و سروش‌پلاس، محاسبه معیارهای تشابه کسینوسی و ژاکارد، نمایش کلیدواژه‌های مشترک و مراحل پیش‌پردازش متن فارسی (در هر دو تم روشن و تاریک) را مشاهده فرمایید:
 
-<div align="center">
-  <video src="./demo.mp4" width="100%" controls autoplay loop muted>
-    مرورگر شما از تگ ویدیو پشتیبانی نمی‌کند. برای تماشای ویدیو روی لینک زیر کلیک کنید:
-  </video>
-  <p>🎬 <b><a href="./demo.mp4">مشاهده یا دانلود مستقیم ویدیوی دموی پروژه (demo.mp4)</a></b></p>
-</div>
+🎬 **[مشاهده یا دانلود مستقیم ویدیوی دموی پروژه (Video/demo.mp4)](./Video/demo.mp4)**
 
-> 💡 **نکته درباره پخش ویدیو در گیت‌هاب:** اگر پلیر بالا در مرورگر شما لود نشد، کافی است روی لینک **[مشاهده یا دانلود مستقیم ویدیوی دمو](./demo.mp4)** کلیک کنید یا فایل `demo.mp4` موجود در ریشه ریپازیتوری را باز نمایید.
+> 💡 **راهنمای تماشای ویدیو:** برای مشاهده ویدیوی محیط برنامه، کافی است روی لینک بالا (**`Video/demo.mp4`**) کلیک کنید و در صفحه بازشده دکمه **View raw** (یا آیکون دانلود) را بزنید تا ویدیو پخش شود.
 
 ---
 
@@ -34,25 +29,25 @@
 
 ```mermaid
 flowchart TB
-    subgraph Layer1 [۱. لایه واکشی ناهمگام داده‌ها - Async Scraping Layer]
-        EitaaWeb[(Eitaa Web Preview<br/>eitaa.com/channel)] -->|httpx.AsyncClient + BS4| EScraper[EitaaScraper<br/>DOM Parser & Reverse Chronological Sort]
-        SoroushAPI[(Soroush Plus Vitrin API<br/>vitrin.splus.ir)] -->|MD5 Signed POST Request| SScraper[SoroushScraper<br/>meta/get & channel/archive JSON Parser]
+    subgraph Layer1 ["۱. لایه واکشی ناهمگام داده‌ها - Async Scraping Layer"]
+        EitaaWeb["Eitaa Web Preview (eitaa.com/channel)"] -->|httpx.AsyncClient + BS4| EScraper["EitaaScraper (DOM Parser & Newest First)"]
+        SoroushAPI["Soroush Plus Vitrin API (vitrin.splus.ir)"] -->|MD5 Signed POST Request| SScraper["SoroushScraper (meta/get & channel/archive)"]
     end
 
-    subgraph Layer2 [۲. لایه پیش‌پردازش متن فارسی - Persian NLP Pipeline]
-        EScraper & SScraper --> Norm[PersianNormalizer<br/>یکسان‌سازی ی/ک عربی، حذف اعراب و استانداردسازی نیم‌فاصله]
-        Norm --> Clean[TextCleaner<br/>حذف لینک‌ها، آیدی‌ها، ایموجی‌ها، ارقام و علائم نگارشی]
-        Clean --> Stop[StopwordFilter<br/>حذف ۱۲۰+ کلمه توقف فارسی و استخراج کلیدواژه‌های مشترک]
+    subgraph Layer2 ["۲. لایه پیش‌پردازش متن فارسی - Persian NLP Pipeline"]
+        EScraper & SScraper --> Norm["PersianNormalizer: یکسان‌سازی ی/ک عربی، حذف اعراب و نیم‌فاصله"]
+        Norm --> Clean["TextCleaner: حذف لینک‌ها، آیدی‌ها، ایموجی‌ها، ارقام و علائم نگارشی"]
+        Clean --> Stop["StopwordFilter: حذف ۱۲۰+ کلمه توقف فارسی و استخراج کلیدواژه‌های مشترک"]
     end
 
-    subgraph Layer3 [۳. لایه موتورهای تشابه‌سنجی داده‌کاوی - Similarity Engines]
-        Stop --> FAISSEng[FaissSimilarityEngine<br/>FAISS IndexFlatIP Cosine Search<br/>Mode A: Fast Char N-Gram | Mode B: Neural MiniLM-L12]
-        Stop --> TFIDFEng[LexicalSimilarityEngine<br/>Word-Level TF-IDF Vectorizer + Cosine Similarity]
-        Stop --> JaccardEng[Jaccard Set Engine<br/>نسبت اشتراک به اجتماع مجموعه‌های واژگانی]
+    subgraph Layer3 ["۳. لایه موتورهای تشابه‌سنجی داده‌کاوی - Similarity Engines"]
+        Stop --> FAISSEng["FaissSimilarityEngine: FAISS IndexFlatIP Cosine Search (Fast N-Gram & Neural MiniLM)"]
+        Stop --> TFIDFEng["LexicalSimilarityEngine: Word-Level TF-IDF Vectorizer + Cosine Similarity"]
+        Stop --> JaccardEng["Jaccard Set Engine: نسبت اشتراک به اجتماع مجموعه‌های واژگانی"]
     end
 
-    subgraph Layer4 [۴. لایه رابط کاربری تعاملی - Interactive RTL Streamlit UI]
-        FAISSEng & TFIDFEng & JaccardEng --> Dashboard[داشبورد تحلیلی راست‌چین با فونت وزیرمتن<br/>کارت‌های امتیاز، فید دو ستونه، رتبه‌بندی خودکار و کالبدشکافی NLP]
+    subgraph Layer4 ["۴. لایه رابط کاربری تعاملی - Interactive RTL Streamlit UI"]
+        FAISSEng & TFIDFEng & JaccardEng --> Dashboard["داشبورد تحلیلی راست‌چین با فونت وزیرمتن، کارت‌های امتیاز و رتبه‌بندی خودکار"]
     end
 ```
 
@@ -79,16 +74,16 @@ sequenceDiagram
     participant API as Soroush Vitrin API (vitrin.splus.ir)
 
     Note over App,Hash: مرحله اول: دریافت شناسه یکتای کانال (meta/get)
-    App->>Hash: Sign(SecretKey + 'json' + AppID + 'meta/get' + '{"lookup":"tasnimnews"}')
+    App->>Hash: Sign(SecretKey + json + AppID + meta/get + lookup_payload)
     Hash-->>App: 32-char MD5 Hex Signature
     App->>API: POST /srvcs-app/v1/json/{AppID}/{MD5_Hash}/meta/get
-    API-->>App: JSON Response: [{'id': 'internal_channel_uuid', ...}]
+    API-->>App: JSON Response (internal_channel_uuid)
 
     Note over App,Hash: مرحله دوم: واکشی آرشیو آخرین پیام‌ها (channel/archive)
-    App->>Hash: Sign(SecretKey + 'json' + AppID + 'channel/archive' + '{"channel_id":"uuid"}')
+    App->>Hash: Sign(SecretKey + json + AppID + channel/archive + channel_id_payload)
     Hash-->>App: 32-char MD5 Hex Signature
     App->>API: POST /srvcs-app/v1/json/{AppID}/{MD5_Hash}/channel/archive
-    API-->>App: JSON Array of Latest Channel Messages (Sorted Newest First)
+    API-->>App: JSON Array of Latest Channel Messages (Newest First)
 ```
 
 * به لطف این معماری: برنامه در کسری از ثانیه، بدون نیاز به اجرای مرورگر، آخرین اخبار هر کانال سروش‌پلاس را دقیقاً از **جدیدترین پیام به سمت پیام‌های قبلی** (کاملاً هم‌تراز با ایتا) واکشی می‌کند و در صورت نیاز به تعداد خبرهای بیشتر (مثلاً ۲۵ خبر)، صفحه‌بندی (Pagination) را با پارامتر `message_id` ادامه می‌دهد.
@@ -102,7 +97,7 @@ sequenceDiagram
 | مرحله | ماژول | عملیات انجام‌شده | نمونه تغییر روی متن |
 | :--- | :--- | :--- | :--- |
 | **۰. متن خام** | `Scraper` | دریافت متن اولیه از ایتا و سروش‌پلاس | `بانك مركزي در https://splus.ir/tasnim اعلام كرد: سود ۳۰٪ ابلاغ شد! 🚀 @tasnim` |
-| **۱. نرمال‌سازی** | `PersianNormalizer` | تبدیل حروف عربی (`ي` $\to$ `ی`، `ك` $\to$ `ک`، `ة` $\to$ `ه`)، حذف کامل اعراب و تشدید (دسته یونیکد `Mn`) و استانداردسازی نیم‌فاصله (`\u200c`) | `بانک مرکزی در https://splus.ir/tasnim اعلام کرد: سود ۳۰٪ ابلاغ شد! 🚀 @tasnim` |
+| **۱. نرمال‌سازی** | `PersianNormalizer` | تبدیل حروف عربی (`ي` به `ی`، `ك` به `ک`، `ة` به `ه`)، حذف کامل اعراب و تشدید (دسته یونیکد `Mn`) و استانداردسازی نیم‌فاصله (`\u200c`) | `بانک مرکزی در https://splus.ir/tasnim اعلام کرد: سود ۳۰٪ ابلاغ شد! 🚀 @tasnim` |
 | **۲. پاک‌سازی نویز** | `TextCleaner` | حذف URLها (`eitaa.com`, `splus.ir`, `http`)، منشن‌ها (`@`)، ایموجی‌ها، اعداد فارسی/عربی/انگلیسی و علائم نگارشی | `بانک مرکزی در اعلام کرد سود ابلاغ شد` |
 | **۳. حذف کلمات توقف** | `StopwordFilter` | حذف بیش از ۱۲۰ کلمه توقف (Stopwords) پرتکرار فارسی (*از، به، در، که، کرد، شد، است...*) و حروف تک‌کاراکتری | `بانک مرکزی اعلام سود ابلاغ` |
 
@@ -163,6 +158,7 @@ $$J(A, B) = \frac{|A \cap B|}{|A \cup B|} = \frac{|A \cap B|}{|A| + |B| - |A \ca
 
 ```text
 persian-news-similarity-engine/
+├── Video/demo.mp4              # ویدیوی دموی محیط برنامه
 ├── app.py                      # نقطه ورود اصلی اپلیکیشن Streamlit
 ├── config.py                   # تنظیمات سراسری و اعتبارسنجی با Pydantic v2
 ├── requirements.txt            # لیست وابستگی‌ها و کتابخانه‌های پایتون
