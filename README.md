@@ -114,7 +114,7 @@ flowchart TB
 * **چالش بزرگ:** برخلاف ایتا، وقتی به آدرس `https://splus.ir/{channel}` درخواست HTTP زده می‌شود، سرور تنها یک پوسته خالی React (`<div id="root"></div>`) به همراه پیام `You need to enable JavaScript to run this app` برمی‌گرداند و هیچ متنی از خبرها در HTML وجود ندارد!
 * **راه‌حل مهندسی‌شده:** با تحلیل باندل جاوااسکریپت ویترین سروش‌پلاس (`vitrin.splus.ir`)، مکانیزم ارتباطی کلاینت با سرور کشف و در پایتون بازتولید شد. سرور سروش‌پلاس برای هر درخواست، یک **امضای دیجیتال مبتنی بر هش `MD5`** تولید می‌کند:
 
-$$\text{Signature} = \text{MD5}\left(\text{SecretKey} \;\Vert\; \text{"json"} \;\Vert\; \text{AppID} \;\Vert\; \text{Endpoint} \;\Vert\; \text{JSON\_Payload}\right)$$
+$$\text{Signature} = \text{MD5}\left(\text{SecretKey} \;\Vert\; \text{"json"} \;\Vert\; \text{AppID} \;\Vert\; \text{Endpoint} \;\Vert\; \text{Payload}\right)$$
 
 درخواست `POST` به این نشانی ارسال می‌شود:
 ```text
