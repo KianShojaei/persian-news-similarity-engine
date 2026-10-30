@@ -1,65 +1,109 @@
-# 📰 Persian News Similarity Engine (Eitaa & Soroush Plus)
-# سامانه هوشمند استخراج و تشابه‌سنجی اخبار فارسی (ایتا و سروش‌پلاس)
+<div align="center">
 
-[![Python Version](https://img.shields.io/badge/Python-3.10%2B-blue.svg?logo=python&logoColor=white)](https://www.python.org/)
-[![Streamlit App](https://img.shields.io/badge/Streamlit-1.35%2B-FF4B4B.svg?logo=streamlit&logoColor=white)](https://streamlit.io/)
-[![FAISS](https://img.shields.io/badge/Vector%20Search-FAISS%20IndexFlatIP-green.svg)](https://github.com/facebookresearch/faiss)
-[![Scikit-Learn](https://img.shields.io/badge/TF--IDF%20%26%20Cosine-Scikit--Learn-F7931E.svg?logo=scikit-learn&logoColor=white)](https://scikit-learn.org/)
-[![Embeddings](https://img.shields.io/badge/Neural%20Model-MiniLM--L12--v2-orange.svg)](https://huggingface.co/sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2)
-[![Tests](https://img.shields.io/badge/Tests-21%20Passed%20(Pytest)-brightgreen.svg?logo=pytest)](https://docs.pytest.org/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
+# 📰 سامانه هوشمند استخراج و تشابه‌سنجی اخبار فارسی (ایتا و سروش‌پلاس)
+### Persian News Similarity Engine — Eitaa & Soroush Plus
 
-یک سامانه جامع، ناهمگام (Asynchronous) و مهندسی‌شده برای درس **داده‌کاوی (Data Mining)** و **پردازش زبان طبیعی (NLP)** که آخرین اخبار عمومی را به‌صورت بلادرنگ (Real-time) از دو پیام‌رسان بومی **ایتا (`eitaa.com`)** و **سروش‌پلاس (`splus.ir`)** استخراج کرده، متن فارسی را طی یک خط‌لوله (Pipeline) سه‌مرحله‌ای پالایش می‌کند و میزان تشابه دو خبر را با سه معیار ریاضی **تشابه کسینوسی برداری (FAISS Cosine Similarity)**، **تشابه کسینوسی واژگانی (TF-IDF Cosine Similarity)** و **تشابه مجموعه‌ای ژاکارد (Jaccard Similarity)** مورد سنجش و رتبه‌بندی قرار می‌دهد.
+**دریافت بلادرنگ و ناهمگام اخبار از ایتا و سروش‌پلاس، پیش‌پردازش تخصصی زبان فارسی و سنجش شباهت با سه الگوریتم داده‌کاوی**
+
+[![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
+[![Streamlit](https://img.shields.io/badge/Streamlit-1.35%2B-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white)](https://streamlit.io/)
+[![FAISS](https://img.shields.io/badge/FAISS-IndexFlatIP-0467DF?style=for-the-badge)](https://github.com/facebookresearch/faiss)
+[![scikit-learn](https://img.shields.io/badge/scikit--learn-TF--IDF%20%26%20Cosine-F7931E?style=for-the-badge&logo=scikitlearn&logoColor=white)](https://scikit-learn.org/)
+[![Embeddings](https://img.shields.io/badge/Neural%20Model-MiniLM--L12--v2-orange?style=for-the-badge)](https://huggingface.co/sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2)
+[![Tests](https://img.shields.io/badge/pytest-21%20Passed-0A9EDC?style=for-the-badge&logo=pytest&logoColor=white)](#-اجرای-تست‌های-خودکار-unit-tests)
+[![License: MIT](https://img.shields.io/badge/License-MIT-22C55E?style=for-the-badge)](./LICENSE)
+
+**توسعه‌دهنده:** [Kian Shojaei](https://github.com/KianShojaei) &nbsp;|&nbsp; **پروژه درس:** داده‌کاوی (Data Mining)
+
+</div>
+
+---
+
+## 🎯 معرفی و هدف پروژه
+
+یک سامانه جامع، ناهمگام (Asynchronous) و مهندسی‌شده در سطح Production برای درس **داده‌کاوی (Data Mining)** و **پردازش زبان طبیعی (NLP)** که آخرین اخبار عمومی را به‌صورت بلادرنگ (Real-time) از دو پیام‌رسان بومی **ایتا (`eitaa.com`)** و **سروش‌پلاس (`splus.ir`)** استخراج کرده، متن فارسی را طی یک خط‌لوله (Pipeline) سه‌مرحله‌ای پالایش می‌کند و میزان تشابه دو خبر را با سه معیار ریاضی **تشابه کسینوسی برداری (FAISS Cosine Similarity)**، **تشابه کسینوسی واژگانی (TF-IDF Cosine Similarity)** و **تشابه مجموعه‌ای ژاکارد (Jaccard Similarity)** مورد سنجش و رتبه‌بندی قرار می‌دهد.
 
 ---
 
 ## 🎥 ویدیوی دموی محیط برنامه (Project Demo Video)
 
-در پیش‌نمایش زنده زیر می‌توانید نحوه کارکرد بلادرنگ سامانه، استخراج هم‌زمان اخبار از ایتا و سروش‌پلاس، محاسبه معیارهای تشابه کسینوسی و ژاکارد، نمایش کلیدواژه‌های مشترک و مراحل پیش‌پردازش متن فارسی را مشاهده فرمایید:
+در پیش‌نمایش زنده زیر می‌توانید نحوه کارکرد بلادرنگ سامانه، استخراج هم‌زمان اخبار از ایتا و سروش‌پلاس، محاسبه معیارهای تشابه کسینوسی و ژاکارد، نمایش کلیدواژه‌های مشترک و مراحل پیش‌پردازش متن فارسی (در هر دو تم روشن و تاریک) را مشاهده فرمایید:
 
 <div align="center">
   <a href="https://github.com/KianShojaei/persian-news-similarity-engine/raw/main/Video/demo.mp4">
-    <img src="./Video/preview.gif" alt="Project Demo Preview" width="100%" style="border-radius: 12px; box-shadow: 0 8px 24px rgba(0,0,0,0.2);" />
+    <img src="./Video/preview.gif" alt="Project Demo Preview" width="95%" style="border-radius: 12px; box-shadow: 0 8px 24px rgba(0,0,0,0.2);" />
   </a>
-  <br/>
-  <p>🎬 <b><a href="https://github.com/KianShojaei/persian-news-similarity-engine/raw/main/Video/demo.mp4">دانلود و تماشای ویدیوی کامل با کیفیت اصلی (MP4)</a></b></p>
+  <br/><br/>
+  <p>🎬 <b><a href="https://github.com/KianShojaei/persian-news-similarity-engine/raw/main/Video/demo.mp4">▶️ مشاهده یا دانلود ویدیوی کامل دمو با کیفیت اصلی (demo.mp4)</a></b></p>
 </div>
+
+> 💡 **راهنمای تماشا:** پیش‌نمایش متحرک بالا به‌صورت خودکار اجرا می‌شود؛ برای دانلود یا تماشای ویدیوی کامل با کیفیت اصلی روی لینک بالا کلیک کنید.
 
 ---
 
 ## 📌 معماری کلان سیستم (System Architecture)
 
-معماری این سامانه بر پایه طراحی ماژولار و جداسازی کامل لایه‌ها (Separation of Concerns) در ۴ لایه اصلی پیاده‌سازی شده است:
+معماری این سامانه بر پایه طراحی ماژولار و جداسازی کامل لایه‌ها (Separation of Concerns) در ۴ لایه اصلی پیاده‌سازی شده است که خروجی هر لایه ورودی لایه بعدی است:
 
 ```mermaid
 flowchart TB
-    subgraph Layer1 ["۱. لایه واکشی ناهمگام داده‌ها - Async Scraping Layer"]
-        EitaaWeb["Eitaa Web Preview (eitaa.com/channel)"] -->|httpx.AsyncClient + BS4| EScraper["EitaaScraper (DOM Parser & Newest First)"]
-        SoroushAPI["Soroush Plus Vitrin API (vitrin.splus.ir)"] -->|MD5 Signed POST Request| SScraper["SoroushScraper (meta/get & channel/archive)"]
+    subgraph L1["لایه اول: دریافت داده ناهمگام - src/scrapers"]
+        direction LR
+        A1["اسکریپر ایتا<br/>eitaa.py"]
+        A2["اسکریپر سروش‌پلاس<br/>soroush.py"]
     end
 
-    subgraph Layer2 ["۲. لایه پیش‌پردازش متن فارسی - Persian NLP Pipeline"]
-        EScraper & SScraper --> Norm["PersianNormalizer: یکسان‌سازی ی/ک عربی، حذف اعراب و نیم‌فاصله"]
-        Norm --> Clean["TextCleaner: حذف لینک‌ها، آیدی‌ها، ایموجی‌ها، ارقام و علائم نگارشی"]
-        Clean --> Stop["StopwordFilter: حذف ۱۲۰+ کلمه توقف فارسی و استخراج کلیدواژه‌های مشترک"]
+    subgraph L2["لایه دوم: پیش‌پردازش متن فارسی - src/nlp"]
+        direction LR
+        B1["نرمال‌سازی<br/>PersianNormalizer"]
+        B2["پاک‌سازی نویز<br/>TextCleaner"]
+        B3["حذف کلمات توقف<br/>StopwordFilter"]
+        B1 --> B2 --> B3
     end
 
-    subgraph Layer3 ["۳. لایه موتورهای تشابه‌سنجی داده‌کاوی - Similarity Engines"]
-        Stop --> FAISSEng["FaissSimilarityEngine: FAISS IndexFlatIP Cosine Search (Fast N-Gram & Neural MiniLM)"]
-        Stop --> TFIDFEng["LexicalSimilarityEngine: Word-Level TF-IDF Vectorizer + Cosine Similarity"]
-        Stop --> JaccardEng["Jaccard Set Engine: نسبت اشتراک به اجتماع مجموعه‌های واژگانی"]
+    subgraph L3["لایه سوم: موتورهای تشابه‌سنجی - src/similarity"]
+        direction LR
+        C1["تشابه برداری و معنایی<br/>FaissSimilarityEngine"]
+        C2["تشابه واژگانی TF-IDF<br/>LexicalSimilarityEngine"]
+        C3["تشابه مجموعه‌ای<br/>Jaccard Similarity"]
     end
 
-    subgraph Layer4 ["۴. لایه رابط کاربری تعاملی - Interactive RTL Streamlit UI"]
-        FAISSEng & TFIDFEng & JaccardEng --> Dashboard["داشبورد تحلیلی راست‌چین با فونت وزیرمتن، کارت‌های امتیاز و رتبه‌بندی خودکار"]
+    subgraph L4["لایه چهارم: رابط کاربری - app.py و src/ui"]
+        direction LR
+        D1["سنجش تشابه"]
+        D2["فید دو ستونه اخبار"]
+        D3["کالبدشکافی خط‌لوله NLP"]
     end
+
+    EXT1[("ایتا<br/>eitaa.com")] --> A1
+    EXT2[("سروش‌پلاس<br/>splus.ir")] --> A2
+    A1 --> L2
+    A2 --> L2
+    L2 --> C1
+    L2 --> C2
+    L2 --> C3
+    C1 --> L4
+    C2 --> L4
+    C3 --> L4
+
+    classDef source fill:#fde68a,stroke:#b45309,stroke-width:2px,color:#1f2937
+    classDef scrape fill:#bfdbfe,stroke:#1d4ed8,stroke-width:2px,color:#1f2937
+    classDef nlp fill:#bbf7d0,stroke:#15803d,stroke-width:2px,color:#1f2937
+    classDef sim fill:#fbcfe8,stroke:#be185d,stroke-width:2px,color:#1f2937
+    classDef ui fill:#ddd6fe,stroke:#6d28d9,stroke-width:2px,color:#1f2937
+
+    class EXT1,EXT2 source
+    class A1,A2 scrape
+    class B1,B2,B3 nlp
+    class C1,C2,C3 sim
+    class D1,D2,D3 ui
 ```
 
 ---
 
 ## 🛠️ چالش‌های وب‌اسکریپینگ و نحوه غلبه بر آن‌ها (Scraper Engineering)
 
-یکی از مهم‌ترین چالش‌های فنی این پروژه، تفاوت بنیادین معماری وب در دو پیام‌رسان **ایتا** و **سروش‌پلاس** بود که بدون استفاده از ابزارهای سنگین و کندی مثل Selenium یا Playwright، صرفاً با درخواست‌های ناهمگام (`httpx.AsyncClient`) حل شد:
+یکی از مهم‌ترین چالش‌های فنی این پروژه، تفاوت بنیادین معماری وب در دو پیام‌رسان **ایتا** و **سروش‌پلاس** بود که بدون استفاده از ابزارهای سنگین و کندی مثل Selenium یا Playwright، صرفاً با درخواست‌های ناهمگام (`httpx.AsyncClient` و `asyncio.gather`) حل شد:
 
 ### ۱. نحوه عملکرد اسکریپر ایتا (`EitaaScraper`)
 * سرور ایتا در آدرس `https://eitaa.com/{channel}` یک صفحه SSR (Server-Side Rendered) برمی‌گرداند که پیام‌ها در تگ‌های `div.etme_widget_message_text` قرار دارند.
@@ -68,26 +112,44 @@ flowchart TB
 
 ### ۲. مهندسی معکوس API امضاشده سروش‌پلاس (`SoroushScraper`)
 * **چالش بزرگ:** برخلاف ایتا، وقتی به آدرس `https://splus.ir/{channel}` درخواست HTTP زده می‌شود، سرور تنها یک پوسته خالی React (`<div id="root"></div>`) به همراه پیام `You need to enable JavaScript to run this app` برمی‌گرداند و هیچ متنی از خبرها در HTML وجود ندارد!
-* **راه‌حل مهندسی‌شده:** با تحلیل باندل جاوااسکریپت ویترین سروش‌پلاس (`vitrin.splus.ir`)، مکانیزم ارتباطی کلاینت با سرور کشف و در پایتون پیاده‌سازی شد. سرور سروش‌پلاس برای هر درخواست، یک **امضای دیجیتال مبتنی بر هش `MD5`** تولید می‌کند:
+* **راه‌حل مهندسی‌شده:** با تحلیل باندل جاوااسکریپت ویترین سروش‌پلاس (`vitrin.splus.ir`)، مکانیزم ارتباطی کلاینت با سرور کشف و در پایتون بازتولید شد. سرور سروش‌پلاس برای هر درخواست، یک **امضای دیجیتال مبتنی بر هش `MD5`** تولید می‌کند:
+
+$$\text{Signature} = \text{MD5}\left(\text{SecretKey} \;\Vert\; \text{"json"} \;\Vert\; \text{AppID} \;\Vert\; \text{Endpoint} \;\Vert\; \text{JSON\_Payload}\right)$$
+
+درخواست `POST` به این نشانی ارسال می‌شود:
+```text
+https://vitrin.splus.ir/srvcs-app/v1/json/{AppID}/{MD5_Signature}/{Endpoint}
+```
+
+### 🔄 نمودار توالی واکشی هم‌زمان (Sequence Diagram)
 
 ```mermaid
 sequenceDiagram
     autonumber
-    participant App as SoroushScraper (Python)
-    participant Hash as MD5 Signature Generator
-    participant API as Soroush Vitrin API (vitrin.splus.ir)
+    participant U as "رابط کاربری Streamlit"
+    participant S as "اسکریپرها - asyncio.gather"
+    participant E as "سرور ایتا - eitaa.com"
+    participant V as "API سروش‌پلاس - splus.ir"
 
-    Note over App,Hash: مرحله اول: دریافت شناسه یکتای کانال (meta/get)
-    App->>Hash: Sign(SecretKey + json + AppID + meta/get + lookup_payload)
-    Hash-->>App: 32-char MD5 Hex Signature
-    App->>API: POST /srvcs-app/v1/json/{AppID}/{MD5_Hash}/meta/get
-    API-->>App: JSON Response (internal_channel_uuid)
+    U->>S: "درخواست دریافت اخبار دو کانال"
 
-    Note over App,Hash: مرحله دوم: واکشی آرشیو آخرین پیام‌ها (channel/archive)
-    App->>Hash: Sign(SecretKey + json + AppID + channel/archive + channel_id_payload)
-    Hash-->>App: 32-char MD5 Hex Signature
-    App->>API: POST /srvcs-app/v1/json/{AppID}/{MD5_Hash}/channel/archive
-    API-->>App: JSON Array of Latest Channel Messages (Newest First)
+    par "دریافت هم‌زمان از ایتا"
+        S->>E: "GET /channel_name"
+        E-->>S: "HTML سمت سرور SSR"
+        S->>S: "پارس BeautifulSoup و فیلتر کمتر از ۳۵ کاراکتر"
+        S->>S: "معکوس‌سازی: جدیدترین خبر اول"
+    and "دریافت هم‌زمان از سروش‌پلاس"
+        S->>S: "ساخت امضای MD5 از SecretKey و AppID و Endpoint و Payload"
+        S->>V: "POST meta/get با lookup برابر نام کانال"
+        V-->>S: "channel_id"
+        S->>S: "ساخت امضای MD5 جدید برای مرحله دوم"
+        S->>V: "POST channel/archive با channel_id"
+        V-->>S: "فهرست JSON از جدیدترین به قدیمی‌ترین"
+        S->>V: "صفحه‌بندی با message_id تا ۲۵ خبر"
+        V-->>S: "ادامه اخبار"
+    end
+
+    S-->>U: "دو فهرست خبر آماده پیش‌پردازش"
 ```
 
 * به لطف این معماری: برنامه در کسری از ثانیه، بدون نیاز به اجرای مرورگر، آخرین اخبار هر کانال سروش‌پلاس را دقیقاً از **جدیدترین پیام به سمت پیام‌های قبلی** (کاملاً هم‌تراز با ایتا) واکشی می‌کند و در صورت نیاز به تعداد خبرهای بیشتر (مثلاً ۲۵ خبر)، صفحه‌بندی (Pagination) را با پارامتر `message_id` ادامه می‌دهد.
@@ -96,7 +158,7 @@ sequenceDiagram
 
 ## 🧹 خط‌لوله پیش‌پردازش متن فارسی (Persian NLP Pipeline)
 
-مقایسه مستقیم متون خام خبری به دلیل تفاوت در کیبوردهای عربی/فارسی، لینک‌های تبلیغاتی انتهای پیام‌ها و افعال ربط، دقت الگوریتم‌های داده‌کاوی را به شدت کاهش می‌دهد. به همین منظور، هر خبر پیش از ورود به موتور تشابه‌سنجی از ۳ مرحله زیر عبور می‌کند:
+مقایسه مستقیم متون خام خبری به دلیل تفاوت در کیبوردهای عربی/فارسی، لینک‌های تبلیغاتی انتهای پیام‌ها و افعال ربط، دقت الگوریتم‌های داده‌کاوی را به شدت کاهش می‌دهد. به همین منظور، هر خبر پیش از ورود به موتور تشابه‌سنجی در کلاس `PersianNLPPipeline` از ۳ مرحله زیر عبور می‌کند:
 
 | مرحله | ماژول | عملیات انجام‌شده | نمونه تغییر روی متن |
 | :--- | :--- | :--- | :--- |
@@ -147,6 +209,63 @@ $$J(A, B) = \frac{|A \cap B|}{|A \cup B|} = \frac{|A \cap B|}{|A| + |B| - |A \ca
 
 ---
 
+### 📊 جدول مقایسه موتورهای تشابه‌سنجی
+
+| ویژگی | FAISS (`IndexFlatIP`) | TF-IDF Cosine | Jaccard Similarity |
+|:---|:---:|:---:|:---:|
+| **سطح تحلیل** | زیرکلمه (N-Gram) یا معنایی (MiniLM) | کلمه (Word-Level) | مجموعه کلمات یکتا (Set) |
+| **نوع شباهت** | برداری / معنایی | واژگانی وزن‌دار | مجموعه‌ای |
+| **وزن‌دهی واژه‌ها** | بله ($L_2$ Sublinear / Dense) | بله (IDF) | خیر |
+| **درک هم‌معنی‌ها** | بله (در حالت عصبی MiniLM) | خیر | خیر |
+| **مقاومت در برابر تغییر صرفی** | بسیار بالا | کم | کم |
+| **سرعت اجرا** | بسیار سریع | بسیار سریع | آنی |
+| **کاربرد اصلی** | رتبه‌بندی خودکار و کشف مشابه‌ترین خبر | سنجش دقیق هم‌پوشانی واژگان کلیدی | نمای سریع هم‌پوشانی واژگان |
+
+---
+
+### 🔀 نمودار خط‌لوله داده‌کاوی (Data Mining Pipeline)
+
+```mermaid
+flowchart LR
+    IN1["خبر ایتا"] --> N["نرمال‌سازی<br/>PersianNormalizer"]
+    IN2["خبر سروش‌پلاس"] --> N
+    N --> CL["پاک‌سازی نویز<br/>TextCleaner"]
+    CL --> SW["حذف کلمات توقف<br/>StopwordFilter"]
+    SW --> TOK["توکن‌های تمیز"]
+
+    TOK --> E1["بردارسازی نویسه‌ای<br/>char n-gram 2 تا 5<br/>یا مدل عصبی MiniLM"]
+    E1 --> E1N["نرمال‌سازی L2"]
+    E1N --> F["ایندکس FAISS<br/>IndexFlatIP"]
+    F --> R1["شباهت کسینوسی برداری<br/>و رتبه‌بندی top-k"]
+
+    TOK --> E2["ماتریس TF-IDF<br/>سطح کلمه"]
+    E2 --> R2["شباهت کسینوسی واژگانی"]
+
+    TOK --> E3["مجموعه کلمات یکتا"]
+    E3 --> R3["ضریب ژاکارد"]
+
+    SW --> KW["extract_shared_tokens<br/>کلیدواژه‌های مشترک"]
+
+    R1 --> OUT["نمایش در داشبورد Streamlit"]
+    R2 --> OUT
+    R3 --> OUT
+    KW --> OUT
+
+    classDef inp fill:#fde68a,stroke:#b45309,stroke-width:2px,color:#1f2937
+    classDef pre fill:#bbf7d0,stroke:#15803d,stroke-width:2px,color:#1f2937
+    classDef vec fill:#bfdbfe,stroke:#1d4ed8,stroke-width:2px,color:#1f2937
+    classDef res fill:#fbcfe8,stroke:#be185d,stroke-width:2px,color:#1f2937
+    classDef outc fill:#ddd6fe,stroke:#6d28d9,stroke-width:2px,color:#1f2937
+
+    class IN1,IN2 inp
+    class N,CL,SW,TOK pre
+    class E1,E1N,F,E2,E3 vec
+    class R1,R2,R3,KW res
+    class OUT outc
+```
+
+---
+
 ## 🌟 قابلیت‌های کلیدی رابط کاربری (Key UI Features)
 
 * **پشتیبانی کامل از راست‌به‌چپ (RTL) و فونت وزیرمتن (`Vazirmatn`):** طراحی بصری استاندارد با آیکون‌های برداری رسمی گوگل (`Material Symbols Rounded`).
@@ -162,7 +281,9 @@ $$J(A, B) = \frac{|A \cap B|}{|A \cup B|} = \frac{|A \cap B|}{|A| + |B| - |A \ca
 
 ```text
 persian-news-similarity-engine/
-├── Video/demo.mp4              # ویدیوی دموی محیط برنامه
+├── Video/
+│   ├── preview.gif             # پیش‌نمایش متحرک زنده در README
+│   └── demo.mp4                # ویدیوی کامل دموی محیط برنامه
 ├── app.py                      # نقطه ورود اصلی اپلیکیشن Streamlit
 ├── config.py                   # تنظیمات سراسری و اعتبارسنجی با Pydantic v2
 ├── requirements.txt            # لیست وابستگی‌ها و کتابخانه‌های پایتون
@@ -171,26 +292,30 @@ persian-news-similarity-engine/
 ├── README.md                   # مستندات جامع پروژه
 │
 ├── src/
-│   ├── scrapers/               # لایه واکشی ناهمگام اخبار
+│   ├── scrapers/               # لایه اول: واکشی ناهمگام اخبار
+│   │   ├── __init__.py
 │   │   ├── base.py             # کلاس پایه HTTP ناهمگام و مدیریت خطاها
 │   │   ├── eitaa.py            # اسکریپر وب ایتا (eitaa.com)
 │   │   └── soroush.py          # کلاینت API امضاشده (MD5) و پارسر سروش‌پلاس (splus.ir)
 │   │
-│   ├── nlp/                    # لایه پردازش زبان طبیعی فارسی
+│   ├── nlp/                    # لایه دوم: پردازش زبان طبیعی فارسی
 │   │   ├── __init__.py         # کلاس ارکستریتور PersianNLPPipeline
 │   │   ├── normalizer.py       # یکسان‌ساز حروف، اعراب‌زدا و اصلاح نیم‌فاصله
 │   │   ├── cleaner.py          # حذف لینک، منشن، ایموجی، اعداد و علائم نگارشی
 │   │   └── stopwords.py        # فیلتر ۱۲۰+ کلمه توقف فارسی
 │   │
-│   ├── similarity/             # لایه الگوریتم‌های داده‌کاوی و تشابه‌سنجی
+│   ├── similarity/             # لایه سوم: الگوریتم‌های داده‌کاوی و تشابه‌سنجی
+│   │   ├── __init__.py
 │   │   ├── faiss_engine.py     # موتور جستجوی برداری FAISS (دوحالته: N-Gram و MiniLM)
 │   │   └── lexical_engine.py   # موتور TF-IDF Cosine Similarity و Jaccard Similarity
 │   │
-│   └── ui/                     # لایه نمایش و رابط کاربری
+│   └── ui/                     # لایه چهارم: نمایش و رابط کاربری
+│       ├── __init__.py
 │       ├── styles.py           # استایل‌های تطبیقی CSS، فونت وزیرمتن و تنظیمات RTL
 │       └── components.py       # کامپوننت‌های کارت‌های امتیاز، مقایسه و رتبه‌بندی
 │
 └── tests/                      # مجموعه تست‌های واحد (۲۱ تست خودکار Pytest)
+    ├── __init__.py
     ├── test_nlp.py             # تست‌های نرمال‌ساز، پاک‌ساز و کلمات توقف
     ├── test_scrapers.py        # تست‌های استخراج پیام از ایتا و سروش‌پلاس
     ├── test_similarity.py      # تست‌های ریاضی Cosine Similarity، FAISS و Jaccard
@@ -201,12 +326,15 @@ persian-news-similarity-engine/
 
 ## 🚀 راهنمای نصب و اجرا (Quickstart Guide)
 
-### ۱. ساخت و فعال‌سازی محیط مجازی (Virtual Environment)
+### ۱. دریافت پروژه و ساخت محیط مجازی (`.venv`)
 ```powershell
+git clone https://github.com/KianShojaei/persian-news-similarity-engine.git
+cd persian-news-similarity-engine
+
 python -m venv .venv
-# در ویندوز (PowerShell):
+# فعال‌سازی در ویندوز (PowerShell):
 .\.venv\Scripts\Activate.ps1
-# در لینوکس یا مک:
+# فعال‌سازی در لینوکس یا مک:
 # source .venv/bin/activate
 ```
 
@@ -239,4 +367,14 @@ streamlit run app.py
 
 ## 📜 مجوز انتشار (License)
 
-این پروژه تحت مجوز **MIT License** منتشر شده است. برای مشاهده جزئیات بیشتر به فایل [LICENSE](./LICENSE) مراجعه فرمایید.
+این پروژه تحت مجوز **[MIT License](./LICENSE)** منتشر شده است.
+
+---
+
+<div align="center">
+
+ساخته‌شده توسط [**Kian Shojaei**](https://github.com/KianShojaei)
+
+⭐ اگر این پروژه برایتان مفید بود، یک ستاره (Star) در گیت‌هاب بدهید.
+
+</div>
